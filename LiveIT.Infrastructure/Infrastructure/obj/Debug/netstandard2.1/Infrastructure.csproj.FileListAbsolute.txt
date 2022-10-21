@@ -1,0 +1,9 @@
+C:\AuthProjects\live-it\LiveIT.Infrastructure\Infrastructure\bin\Debug\netstandard2.1\Infrastructure.deps.json
+C:\AuthProjects\live-it\LiveIT.Infrastructure\Infrastructure\bin\Debug\netstandard2.1\Infrastructure.dll
+C:\AuthProjects\live-it\LiveIT.Infrastructure\Infrastructure\bin\Debug\netstandard2.1\Infrastructure.pdb
+C:\AuthProjects\live-it\LiveIT.Infrastructure\Infrastructure\obj\Debug\netstandard2.1\Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+C:\AuthProjects\live-it\LiveIT.Infrastructure\Infrastructure\obj\Debug\netstandard2.1\Infrastructure.AssemblyInfoInputs.cache
+C:\AuthProjects\live-it\LiveIT.Infrastructure\Infrastructure\obj\Debug\netstandard2.1\Infrastructure.AssemblyInfo.cs
+C:\AuthProjects\live-it\LiveIT.Infrastructure\Infrastructure\obj\Debug\netstandard2.1\Infrastructure.csproj.CoreCompileInputs.cache
+C:\AuthProjects\live-it\LiveIT.Infrastructure\Infrastructure\obj\Debug\netstandard2.1\Infrastructure.dll
+C:\AuthProjects\live-it\LiveIT.Infrastructure\Infrastructure\obj\Debug\netstandard2.1\Infrastructure.pdb

@@ -1,0 +1,10 @@
+C:\AuthProjects\live-it\LiveIT.Core\Common\bin\Release\netstandard2.1\Common.deps.json
+C:\AuthProjects\live-it\LiveIT.Core\Common\bin\Release\netstandard2.1\Common.dll
+C:\AuthProjects\live-it\LiveIT.Core\Common\bin\Release\netstandard2.1\Common.pdb
+C:\AuthProjects\live-it\LiveIT.Core\Common\obj\Release\netstandard2.1\Common.GeneratedMSBuildEditorConfig.editorconfig
+C:\AuthProjects\live-it\LiveIT.Core\Common\obj\Release\netstandard2.1\Common.AssemblyInfoInputs.cache
+C:\AuthProjects\live-it\LiveIT.Core\Common\obj\Release\netstandard2.1\Common.AssemblyInfo.cs
+C:\AuthProjects\live-it\LiveIT.Core\Common\obj\Release\netstandard2.1\Common.csproj.CoreCompileInputs.cache
+C:\AuthProjects\live-it\LiveIT.Core\Common\obj\Release\netstandard2.1\Common.dll
+C:\AuthProjects\live-it\LiveIT.Core\Common\obj\Release\netstandard2.1\Common.pdb
+C:\AuthProjects\live-it\LiveIT.Core\Common\obj\Release\netstandard2.1\Common.csproj.AssemblyReference.cache

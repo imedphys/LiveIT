@@ -1,0 +1,13 @@
+C:\AuthProjects\live-it\LiveIT.Service\AzureStorage\bin\Release\netstandard2.1\AzureStorage.deps.json
+C:\AuthProjects\live-it\LiveIT.Service\AzureStorage\bin\Release\netstandard2.1\AzureStorage.dll
+C:\AuthProjects\live-it\LiveIT.Service\AzureStorage\bin\Release\netstandard2.1\AzureStorage.pdb
+C:\AuthProjects\live-it\LiveIT.Service\AzureStorage\bin\Release\netstandard2.1\Common.dll
+C:\AuthProjects\live-it\LiveIT.Service\AzureStorage\bin\Release\netstandard2.1\Common.pdb
+C:\AuthProjects\live-it\LiveIT.Service\AzureStorage\obj\Release\netstandard2.1\AzureStorage.csproj.AssemblyReference.cache
+C:\AuthProjects\live-it\LiveIT.Service\AzureStorage\obj\Release\netstandard2.1\AzureStorage.GeneratedMSBuildEditorConfig.editorconfig
+C:\AuthProjects\live-it\LiveIT.Service\AzureStorage\obj\Release\netstandard2.1\AzureStorage.AssemblyInfoInputs.cache
+C:\AuthProjects\live-it\LiveIT.Service\AzureStorage\obj\Release\netstandard2.1\AzureStorage.AssemblyInfo.cs
+C:\AuthProjects\live-it\LiveIT.Service\AzureStorage\obj\Release\netstandard2.1\AzureStorage.csproj.CoreCompileInputs.cache
+C:\AuthProjects\live-it\LiveIT.Service\AzureStorage\obj\Release\netstandard2.1\AzureStorage.csproj.CopyComplete
+C:\AuthProjects\live-it\LiveIT.Service\AzureStorage\obj\Release\netstandard2.1\AzureStorage.dll
+C:\AuthProjects\live-it\LiveIT.Service\AzureStorage\obj\Release\netstandard2.1\AzureStorage.pdb
