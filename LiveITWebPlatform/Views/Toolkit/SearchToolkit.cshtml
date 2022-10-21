@@ -1,0 +1,931 @@
+﻿@model LiveIT.Toolkit.Models.ToolkitDTO
+@using Microsoft.Extensions.Options
+@inject IOptions<LiveIT.Security.ReCAPTCHASettings> GoogleReCAPTCHA
+@using Microsoft.AspNetCore.HttpOverrides;
+
+@{
+    ViewData["Title"] = "LIVE IT Toolkit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="content-heading" tabindex="0">
+    <div>
+        <strong class="accessibility-medium" style="color:dimgrey">LIVE IT - @Model.TranslationDTOs[0].Text</strong>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card card-default">
+            <div class="accessibility-medium" style="margin: 10px;">@Model.TranslationDTOs[1].Text</div>
+            <div id="search-card" class="card-body">
+                <div role="tabpanel">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <a tabindex="0" class="nav-link active accessibility-medium accessibility-underline accessibility-colored accessibility-underline" href="#home" aria-controls="home" role="tab" data-toggle="tab">@Model.TranslationDTOs[29].Text</a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a tabindex="0" class="nav-link accessibility-medium accessibility-underline accessibility-colored accessibility-underline" href="#catalogue" aria-controls="catalogue" role="tab" data-toggle="tab">@Model.TranslationDTOs[31].Text</a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a tabindex="0" class="nav-link accessibility-medium accessibility-underline accessibility-colored accessibility-underline" href="#profile" aria-controls="profile" role="tab" data-toggle="tab">@Model.TranslationDTOs[30].Text</a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a tabindex="0" class="nav-link accessibility-medium accessibility-underline accessibility-colored accessibility-underline" href="#messages" aria-controls="messages" role="tab" data-toggle="tab">@Model.TranslationDTOs[32].Text</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <!-- Stakeholders tab-->
+                        <div tabindex="0" class="tab-pane active" id="home" role="tabpanel">
+                            <br />
+                            <br />
+                            <table style="margin: 0px 0px 0px 0px" width="800px">
+                                <tbody class="line-pallet-btn" style="vertical-align:top">
+                                    <tr class="gradeX">
+                                        <td style="height: 100px; width: 150px">
+                                            <div class="col-auto">
+                                                <label class="accessibility-medium">@Model.TranslationDTOs[2].Text :</label>
+                                            </div>
+                                            <div class="col-auto">
+                                                <input id="title-radio" type="radio" name="Sort" title="Title filter radio" onchange="SortTitle()" class="accessibility-colored accessibility-underline" checked>
+                                                <label class="accessibility-medium">@Model.TranslationDTOs[5].Text :</label>
+                                            </div>
+                                            <div class="col-auto">
+                                                <input id="country-radio" type="radio" name="Sort" title="Title country radio" class="accessibility-colored accessibility-underline" onchange="SortCountry()">
+                                                <label class="accessibility-medium">@Model.TranslationDTOs[6].Text :</label>
+                                            </div>
+                                        </td>
+                                        <td style="height: 100px; width: 150px">
+                                            <div style="width:200px">
+                                                <label class="accessibility-medium">@Model.TranslationDTOs[3].Text :</label>
+                                                @Html.DropDownListFor(x => Model.SelectedCountry, new SelectList(Model.CountryListItems, "Value", "Text"), htmlAttributes: new { @class = "form-control MakeWide accessibility-medium accessibility-colored", id = "country" })
+                                                @Html.ValidationMessageFor(x => x.SelectedCountry, "", new { @class = "text-danger" })
+                                                @Html.DropDownListFor(x => Model.SelectedStakeholderType, new SelectList(Model.StakeholderTypeListItems, "Value", "Text"), htmlAttributes: new { @style = "margin: 10px 0", @class = "form-control MakeWide accessibility-medium accessibility-colored", id = "stakeholdertype" })
+                                                @Html.ValidationMessageFor(x => x.SelectedStakeholderType, "", new { @class = "text-danger" })
+                                            </div>
+                                        </td>
+                                        <td style="width:200px">
+                                            <input type="text" title="Search stakeholders" class="form-control form-control-sm m-b-xs accessibility-medium accessibility-colored accessibility-underline" id="searchTab1Field"
+                                                   placeholder="@Model.TranslationDTOs[7].Text">
+                                            <br />
+                                            <h5 class="accessibility-medium">@Model.TranslationDTOs[4].Text :</h5>
+                                            <label id="sh-count" class="accessibility-medium" style="font-size:14px"><i>0 registries</i></label>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div id="stakeholder-header-template">
+                                <div class="form-group row">
+                                    <div class="col-md-2" id="item-icon" style="margin:0 20px">
+                                        <label class="control-label accessibility-medium"><strong>@Model.TranslationDTOs[5].Text </strong></label>
+                                    </div>
+                                    <div class="col-md-1" id="item-name">
+                                        <p id="sh-country" class="accessibility-medium"><strong>@Model.TranslationDTOs[6].Text </strong></p>
+                                    </div>
+                                    <div class="col-md-1" id="item-description">
+                                        <p id="sh-type" class="accessibility-medium"><strong>@Model.TranslationDTOs[8].Text </strong></p>
+                                    </div>
+                                    <div class="col-md-1" id="item-navigation">
+                                        <p id="sh-email" class="accessibility-medium"><strong>Email</strong></p>
+                                    </div>
+                                    <div class="col-md-2" id="item-navigation">
+                                        <p id="sh-email" class="accessibility-medium"><strong>Media</strong></p>
+                                    </div>
+                                </div>
+                                <p class="lead bb"> </p>
+                            </div>
+                            <div id="stakeholders-container">
+
+                            </div>
+
+                        </div>
+                        <!-- Catalogue tab-->
+                        <div class="tab-pane" id="catalogue" role="tabpanel">
+                            <br />
+                            <br />
+                            <table style="margin: 0px 0px 0px 0px" width="800px">
+                                <tbody class="line-pallet-btn" style="vertical-align:top">
+                                    <tr class="gradeX">
+                                        <td style="height: 100px; width: 150px">
+                                            <div style="width:200px">
+                                                <label style="font-size:20px">@Model.TranslationDTOs[14].Text :</label>
+                                                @Html.DropDownListFor(x => Model.SelectedCatalogueType, new SelectList(Model.CatalogueTypeListItems, "Value", "Text"), htmlAttributes: new { @style = "margin: 10px 0", @class = "form-control MakeWide accessibility-medium accessibility-colored accessibility-underline", id = "cataloguetype" })
+                                                @Html.ValidationMessageFor(x => x.SelectedCatalogueType, "", new { @class = "text-danger" })
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div id="catalogue-header-template">
+                                <div class="form-group row">
+                                    <div class="col-md-3" id="item-icon" style="margin:0 20px">
+                                        <label class="control-label" style="font-size:14px;"><strong>@Model.TranslationDTOs[5].Text</strong></label>
+                                    </div>
+                                    <div class="col-md-1" id="item-name">
+                                        <p id="ca-author" style="font-size:14px;"><strong>@Model.TranslationDTOs[9].Text</strong></p>
+                                    </div>
+                                    <div class="col-md-1" id="item-year">
+                                        <p id="ca-year" style="font-size:14px;"><strong>@Model.TranslationDTOs[10].Text</strong></p>
+                                    </div>
+                                    <div class="col-md-1" id="item-target">
+                                        <p id="ca-target" style="font-size:14px;"><strong>@Model.TranslationDTOs[11].Text</strong></p>
+                                    </div>
+                                    <div class="col-md-1" id="item-target">
+                                        <p id="ca-target" style="font-size:14px;"><strong>@Model.TranslationDTOs[12].Text</strong></p>
+                                    </div>
+                                    <div class="col-md-1" id="item-country">
+                                        <p id="ca-country" style="font-size:14px;"><strong>@Model.TranslationDTOs[6].Text</strong></p>
+                                    </div>
+                                    <div class="col-md-1" id="item-link">
+                                        <p id="ca-link" style="font-size:14px; text-align:left"><strong>@Model.TranslationDTOs[13].Text</strong></p>
+                                    </div>
+                                </div>
+                                <p class="lead bb"> </p>
+                            </div>
+                            <div id="catalogue-container">
+
+                            </div>
+
+                        </div>
+                        <!-- Advisor tool tab-->
+                        <div class="tab-pane" id="profile" role="tabpanel">
+                            <br />
+                            <div class="form-row align-items-center">
+                                <div class="col-auto">
+                                    <label class="accessibility-medium" style="font-size:20px">@Model.TranslationDTOs[14].Text :</label>
+                                </div>
+                                <div class="col-auto">
+                                    <div>
+                                        @Html.DropDownListFor(x => Model.SelectedCategory, new SelectList(Model.CategoryListItems, "Value", "Text"), htmlAttributes: new { @class = "form-control MakeWide accessibility-medium accessibility-colored accessibility-underline", id = "category" })
+                                        @Html.ValidationMessageFor(x => x.SelectedCategory, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="form-row align-items-center">
+                                <div class="col-auto">
+                                    <label class="accessibility-medium" style="font-size:20px">@Model.TranslationDTOs[15].Text :</label>
+                                </div>
+                                <div class="col-auto" id="subcategory-div">
+                                    <div style="width:300px">
+                                        @Html.DropDownListFor(x => Model.SelectedSubCategory, new SelectList(Model.SubCategoryListItems, "Value", "Text"), htmlAttributes: new { @class = "form-control MakeWide accessibility-medium accessibility-colored accessibility-underline", id = "subcategory" })
+                                        @Html.ValidationMessageFor(x => x.SelectedSubCategory, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div>
+                                <h5 class="accessibility-medium">@Model.TranslationDTOs[4].Text:</h5>
+                                <label id="tools-count" style="font-size:14px" class="accessibility-medium"><i>0 registries</i></label>
+                            </div>
+                            <div class="row">
+                                <div id="tools-container-top5" class="float-container">
+
+                                </div>
+                            </div>
+                            <br />
+                            <br />
+                            <div class="row">
+                                <div id="tools-container-all">
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Online Community (Makerspace) & Guidelines tab-->
+                        <div class="tab-pane" id="messages" role="tabpanel">
+                            <br />
+                            <p class="accessibility-medium">
+                                @Model.TranslationDTOs[16].Text : <a class="accessibility-colored accessibility-underline" target="_blank" href="https://live-it.circle.so/c/general/">https://live-it.circle.so/c/general/</a>
+                            </p>
+                            <img src="~/images/MakerSpace.PNG" width="500" height="250" alt="Makerspace image" />
+                            <br />
+                            <br />
+                            <p class="accessibility-medium">@Model.TranslationDTOs[17].Text : <a class="accessibility-colored accessibility-underline" target="_blank" href="~/export-files/LIVE-IT Guidelines_SG Draft.pdf">Guidelines.pdf</a></p>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="stakeholder-item-template" style="display:none;">
+    <div class="form-group row">
+        <div class="col-md-2" id="item-icon" style="margin:0 20px">
+            <label class="control-label accessibility-medium" style="font-size:14px"><strong>Acquired Brain Injury Ireland</strong></label>
+        </div>
+        <div class="col-md-1" id="item-name">
+            <p id="sh-country" class="accessibility-medium">Ireland</p>
+        </div>
+        <div class="col-md-1" id="item-description">
+            <p id="sh-type" class="accessibility-medium">User representatives</p>
+        </div>
+        <div class="col-md-1" id="item-navigation">
+            <p id="sh-email" class="accessibility-medium"></p>
+        </div>
+        <div class="col-md-2" id="item-navigation"> 
+            <a class="control-label"><img id="sh-website" src="~/images/icons/website_active_icon.png" width="30" height="30" alt="Website icon" /></a>
+            <a class="control-label"><img id="sh-facebook" src="~/images/icons/facebook_active_icon.png" width="30" height="30" alt="Facebook icon" /></a>
+            <a class="control-label"><img id="sh-youtube" src="~/images/icons/youtube_active_icon.png" width="30" height="30" alt="Youtube icon" /></a>
+            <a class="control-label"><img id="sh-twitter" src="~/images/icons/twitter_active_icon.png" width="30" height="30" alt="Twitter icon" /></a>
+            <a class="control-label"><img id="sh-linkedin" src="~/images/icons/linkedin_active_icon.png" width="30" height="30" alt="Linken in icon" /></a>
+        </div>
+    </div>
+    <p class="lead bb"> </p>
+</div>
+
+<div id="catalogue-item-template" style="display:none;">
+    <div class="form-group row">
+        <div class="col-md-3" id="item-icon" style="margin:0 20px">
+            <label class="control-label accessibility-medium" style="font-size:14px"><strong>-</strong></label>
+        </div>
+        <div class="col-md-1" id="item-author">
+            <p id="ca-author" class="accessibility-medium">-</p>
+        </div>
+        <div class="col-md-1" id="item-year">
+            <p id="ca-year" class="accessibility-medium">-</p>
+        </div>
+        <div class="col-md-1" id="item-target">
+            <p id="ca-target" class="accessibility-medium">-</p>
+        </div>
+        <div class="col-md-1" id="item-theme">
+            <p id="ca-theme" class="accessibility-medium">-</p>
+        </div>
+        <div class="col-md-1" id="item-country">
+            <p id="ca-country" class="accessibility-medium">-</p>
+        </div>
+        <div class="col-md-1" id="item-link">
+            <a href="" class="control-label"><img id="sh-website" src="~/images/icons/website_active_icon.png" width="30" height="30" alt="Website icon" /></a>
+        </div>
+    </div>
+    <p class="lead bb"> </p>
+</div>
+
+<div id="tool-item-template-large" style="float: left; display: none" class="float-child">
+    <div class="form-group row" style="background-color: lightgray; height: 250px; width: 320px; margin: 5px ">
+        <div class="col-md-2" id="item-icon">
+            <a href="" target="_blank" class="control-label">
+                <img src="https://cdn-icons-png.flaticon.com/512/732/732221.png" width="100" height="100" style="margin:15px 0px" alt="Tool icon" />
+            </a>
+        </div>
+        <div class="col-md-3" style="margin: 10px 50px">
+            <div style="width:200px">
+                <a href="" target="_blank" class="control-label">
+                    <p style="font-size:16px" class="accessibility-medium accessibility-colored accessibility-underline">-</p>
+                </a>
+                <p style="margin:-10px 0;color:black" id="tool-rate" class="accessibility-medium">-</p>
+                <label style="margin:10px 0" class="control-label  accessibility-medium">-</label>
+                <a class="mb-1 btn btn-primary accessibility-medium" style="background-color:steelblue; border-color:lightskyblue" href="" target="_blank"><p class="accessibility-colored accessibility-underline">@Model.TranslationDTOs[18].Text</p></a>
+                <a class="mb-1 btn btn-primary open-AddRateDialog accessibility-medium" data-id="test123" data-target="#RateDialog" data-toggle="modal"><p class="accessibility-colored accessibility-underline">@Model.TranslationDTOs[19].Text</p></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="tool-item-template" style="display:none">
+    <div class="form-group row">
+        <div class="col-md-1" id="item-icon" style="margin:0 20px">
+            <img src="https://cdn-icons-png.flaticon.com/512/732/732221.png" width="40" height="40" alt="Tool icon" />
+        </div>
+        <div class="col-md-2" id="item-name">
+            <a href="https://www.javascripttutorial.net/dom/manipulating/remove-all-child-nodes/" class="control-label accessibility-medium accessibility-colored accessibility-underline">Speech to text</a>
+            <p id="tool-rate" class="accessibility-medium">-</p>
+        </div>
+        <div class="col-md-5" id="item-description">
+            <label class="control-label accessibility-medium">accessiBe is a web accessibility solution for ADA and WCAG compliance. It enables websites to be accessible to people with disabilities.</label>
+        </div>
+        <div class="col-md-1" id="item-navigation">
+            <a class="mb-1 btn btn-primary accessibility-medium" style="background-color:steelblue; border-color:lightskyblue"><p class="accessibility-colored accessibility-underline">@Model.TranslationDTOs[18].Text</p></a>
+            <a class="mb-1 btn btn-primary accessibility-medium open-AddRateDialog" data-id="test123" data-target="#RateDialog" data-toggle="modal"><p class="accessibility-colored accessibility-underline">@Model.TranslationDTOs[19].Text</p></a>
+        </div>
+    </div>
+    <p class="lead bb"> </p>
+</div>
+<br />
+<br />
+
+@section BodyArea {
+    <div class="modal fade" id="RateDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog" style="width:1250px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="myModalLabel">Rate</h3>
+                </div>
+                <div class="modal-body">
+                    <br />
+                    <br />
+                    <div class="col-md-12">
+                        <label>
+                            <strong>@Model.TranslationDTOs[20].Text </strong>
+                        </label>
+                        <label class="c-radio" style="margin: 0 0 0 10px ">
+                            <input onclick="CheckRadioBtn()" id="inlineradio10" type="radio" name="i-radio" value="1" />
+                            <span class="fa fa-star"></span><img src="~/images/emojis/emoji_1.webp" width="22" height="22" alt="Emoji rank one" />
+                        </label>
+                        <label class="c-radio">
+                            <input onclick="CheckRadioBtn()" id="inlineradio20" type="radio" name="i-radio" value="2" />
+                            <span class="fa fa-star"></span><img src="~/images/emojis/emoji_2.webp" width="22" height="22" alt="Emoji rank two" />
+                        </label>
+                        <label class="c-radio">
+                            <input onclick="CheckRadioBtn()" id="inlineradio30" type="radio" name="i-radio" value="3" />
+                            <span class="fa fa-star"></span><img src="~/images/emojis/emoji_3.webp" width="22" height="22" alt="Emoji rank three" />
+                        </label>
+                        <label class="c-radio">
+                            <input onclick="CheckRadioBtn()" id="inlineradio30" type="radio" name="i-radio" value="4" />
+                            <span class="fa fa-star"></span><img src="~/images/emojis/emoji_4.webp" width="22" height="22" alt="Emoji rank four" />
+                        </label>
+                        <label class="c-radio">
+                            <input onclick="CheckRadioBtn()" id="inlineradio30" type="radio" name="i-radio" value="5" />
+                            <span class="fa fa-star"></span><img src="~/images/emojis/emoji_5.webp" width="22" height="22" alt="Emoji rank five" />
+                        </label>
+                    </div>
+                    <div class="col-md-12">
+                        <label>
+                            <strong>@Model.TranslationDTOs[21].Text </strong>
+                        </label>
+                        <label class="c-radio" style="margin: 0 0 0 10px">
+                            <input onclick="CheckRadioBtn()" id="inlineradio10" type="radio" name="i-radio1" value="1" />
+                            <span class="fa fa-star"></span><img src="~/images/emojis/emoji_1.webp" width="22" height="22" alt="Emoji rank one" />
+                        </label>
+                        <label class="c-radio">
+                            <input onclick="CheckRadioBtn()" id="inlineradio20" type="radio" name="i-radio1" value="2" />
+                            <span class="fa fa-star"></span><img src="~/images/emojis/emoji_2.webp" width="22" height="22" alt="Emoji rank two" />
+                        </label>
+                        <label class="c-radio">
+                            <input onclick="CheckRadioBtn()" id="inlineradio30" type="radio" name="i-radio1" value="3" />
+                            <span class="fa fa-star"></span><img src="~/images/emojis/emoji_3.webp" width="22" height="22" alt="Emoji rank three" />
+                        </label>
+                        <label class="c-radio">
+                            <input onclick="CheckRadioBtn()" id="inlineradio30" type="radio" name="i-radio1" value="4" />
+                            <span class="fa fa-star"></span><img src="~/images/emojis/emoji_4.webp" width="22" height="22" alt="Emoji rank four" />
+                        </label>
+                        <label class="c-radio">
+                            <input onclick="CheckRadioBtn()" id="inlineradio30" type="radio" name="i-radio1" value="5" />
+                            <span class="fa fa-star"></span><img src="~/images/emojis/emoji_5.webp" width="22" height="22" alt="Emoji rank five" />
+                        </label>
+                    </div>
+                    <div class="col-md-12">
+                        <label>
+                            <strong>@Model.TranslationDTOs[22].Text </strong>
+                        </label>
+                        <label class="c-radio" style="margin: 0 0 0 12px">
+                            <input onclick="CheckRadioBtn()" id="inlineradio10" type="radio" name="i-radio2" value="1" />
+                            <span class="fa fa-star"></span><img src="~/images/emojis/emoji_1.webp" width="22" height="22" alt="Emoji rank one" />
+                        </label>
+                        <label class="c-radio">
+                            <input onclick="CheckRadioBtn()" id="inlineradio20" type="radio" name="i-radio2" value="2" />
+                            <span class="fa fa-star"></span><img src="~/images/emojis/emoji_2.webp" width="22" height="22" alt="Emoji rank two" />
+                        </label>
+                        <label class="c-radio">
+                            <input onclick="CheckRadioBtn()" id="inlineradio30" type="radio" name="i-radio2" value="3" />
+                            <span class="fa fa-star"></span><img src="~/images/emojis/emoji_3.webp" width="22" height="22" alt="Emoji rank three" />
+                        </label>
+                        <label class="c-radio">
+                            <input onclick="CheckRadioBtn()" id="inlineradio30" type="radio" name="i-radio2" value="4" />
+                            <span class="fa fa-star"></span><img src="~/images/emojis/emoji_4.webp" width="22" height="22" alt="Emoji rank four" />
+                        </label>
+                        <label class="c-radio">
+                            <input onclick="CheckRadioBtn()" id="inlineradio30" type="radio" name="i-radio2" value="5" />
+                            <span class="fa fa-star"></span><img src="~/images/emojis/emoji_5.webp" width="22" height="22" alt="Emoji rank five" />
+                        </label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a name="submit-btn" id="submit-btn" onclick="RateTool()" class="btn btn-primary">@Model.TranslationDTOs[28].Text</a>
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">@Model.TranslationDTOs[23].Text</button>
+                    <div id="submit-id" hidden></div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section Styles{
+    <style>
+        .grecaptcha-badge {
+            bottom: 50px !important;
+        }
+
+        .modal-ku {
+            width: 1000px;
+            margin: auto;
+        }
+
+        .MakeWide {
+            height: 400px;
+        }
+
+        .grecaptcha-badge {
+            display: none;
+        }
+    </style>
+    <link href="~/vendor/loaders.css/loaders.css" rel="stylesheet" />
+}
+
+@section Scripts {
+    <script src="~/js/jquery-3.6.0.slim.min.js"></script>
+    <script src="~/js/popper.min.js"></script>
+    <script src="~/js/moment.js"></script>
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+
+    <!-- Accessibility Menu --->
+    <!--
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <link rel="stylesheet" href="~/css/accessibility/main.css">
+        <link rel="stylesheet" type="text/css" href="vendor/slick-1.8.1/slick/slick.css" />
+        <link rel="stylesheet" type="text/css" href="vendor/slick-1.8.1/slick/slick-theme.css" />
+        -->
+    <link href='https://fonts.googleapis.com/css?family=Catamaran:400,200,700' rel='stylesheet' type='text/css'>
+    <script src="~/vendor/modernizr/modernizr.js"></script>
+    <script src="~/vendor/jquery/jquery.js"></script>
+    <script src="~/vendor/jqueryui/jquery-ui.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+
+    <script src="~/vendor/globalassets/scripts/assets.core.js"></script>
+
+    <div id="dialog" title="Basic dialog">
+        <div id="dialogContent"></div>
+    </div>
+
+    <script src="~/vendor/globalassets/scripts/assets.responsive.js"></script>
+
+    <script src="~/vendor/share/4.0/js/sharewidget-4.0.js"></script>
+    <script src="~/vendor/portfolio/jquery.quicksand.js"></script>
+    <script src="~/vendor/back-to-top/main.js"></script>
+
+    <script src="https://www.google.com/recaptcha/api.js?render=@GoogleReCAPTCHA.Value.ReCAPTCHA_Site_Key"></script>
+    <script>
+        desktop = 0;
+        var remoteIp = "";
+        grecaptcha.ready(function () {
+            grecaptcha.execute('@GoogleReCAPTCHA.Value.ReCAPTCHA_Site_Key', { action: 'homepage' }).then(function (token) {
+                $('#Token').val(token);
+            });
+        });
+
+        $(document).ready(function () {
+            //checkUserAgent();
+            loadGetAddress();
+            var input = document.getElementById('searchTab1Field');
+            input.addEventListener('input', autocompleteTab1);
+            document.getElementById('country').selectedIndex = 0;
+            document.getElementById('subcategory').selectedIndex = 0;
+            document.getElementById('stakeholdertype').selectedIndex = 0;
+
+            var urlString = "?countryId=0&stakeholderTypeId=0&orderId=0";
+            getStackHolderList(urlString);
+
+            if (@Model.AccessibilityMenuIPDTO.Fonts == 1){
+                setFontSize();
+            }
+
+            if (@Model.AccessibilityMenuIPDTO.Underline == 1){
+                setUnderlineLinks();
+            }
+
+            if (@Model.AccessibilityMenuIPDTO.Colored == 1) {
+                setColoredLinks();
+            }
+        });
+
+        //Accesibility Menu
+        function setFontSize()
+        {
+            var accessibilityL = document.getElementsByClassName('accessibility-large');
+            var accessibilityM = document.getElementsByClassName('accessibility-medium');
+            for (let i = 0; i < accessibilityL.length; i++) {
+                accessibilityL[i].style.fontSize = "150%";
+            }
+            for (let i = 0; i < accessibilityM.length; i++) {
+                accessibilityM[i].style.fontSize = "135%";
+            }
+        }
+        function setUnderlineLinks() {
+            var accessibilityUnderline = document.getElementsByClassName('accessibility-underline');
+            for (let i = 0; i < accessibilityUnderline.length; i++) {
+                accessibilityUnderline[i].style.textDecoration = "underline";
+            }
+        }
+        function setColoredLinks() {
+            var accessibilityColored = document.getElementsByClassName('accessibility-colored');
+            for (let i = 0; i < accessibilityColored.length; i++) {
+                accessibilityColored[i].style.backgroundColor = "yellow";
+            }
+        }
+
+        const loadGetAddress = async () => {
+            remoteIp = await getIpAddress();
+        }
+
+        function searchStakeholders() {
+            document.getElementById('search-card').classList.add('whirl');
+
+            var inputField = document.getElementById('searchTab1Field').value;
+            var country = document.getElementById('country').value;
+            var stakeholdertype = document.getElementById('stakeholdertype').value;
+            var orderbytitle = document.getElementById('title-radio').checked;
+            var orderid = orderbytitle == true ? 0 : 1;
+
+            if (country == "-") {
+                country = "0";
+            }
+            if (stakeholdertype == "-") {
+                stakeholdertype = "0";
+            }
+            var urlString = "?countryId=" + country + "&stakeholderTypeId=" + stakeholdertype + "&orderId=" + orderid + "&inputField=" + inputField;
+
+            getStackHolderList(urlString);
+        }
+
+        function getStackHolderList(urlString) {
+            $.get("GetStakeholders/" + urlString, function (data) {
+                removeAllChildNodes(document.getElementById("stakeholders-container"));
+
+                document.getElementById("sh-count").innerHTML = data.length + " registries";
+
+                for (let i = 0; i < data.length; i++) {
+                    var itm = document.getElementById("stakeholder-item-template");
+                    var cln = itm.cloneNode(true);
+                    cln.style.display = "block";
+                    document.getElementById("stakeholders-container").appendChild(cln);
+
+                    cln.children[0].children[0].children[0].innerHTML = data[i].name;
+                    if (data[i].selectedCountry != '')
+                        cln.children[0].children[1].children[0].innerHTML = data[i].selectedCountry;
+                    cln.children[0].children[2].children[0].innerHTML = data[i].stakeHolderTypeName;
+                    if (data[i].email != '')
+                        cln.children[0].children[3].children[0].innerHTML = data[i].email;
+
+                    if (data[i].website.replace(/\s/g, "") != '') cln.children[0].children[4].children[0].href = data[i].website;
+                    if (data[i].facebookUrl.replace(/\s/g, "") != '') cln.children[0].children[4].children[1].href = data[i].facebookUrl;
+                    if (data[i].youtubeUrl.replace(/\s/g, "") != '') cln.children[0].children[4].children[2].href = data[i].youtubeUrl;
+                    if (data[i].twitterUrl.replace(/\s/g, "") != '') cln.children[0].children[4].children[3].href = data[i].twitterUrl;
+                    if (data[i].linkedInUrl.replace(/\s/g, "") != '') cln.children[0].children[4].children[4].href = data[i].linkedInUrl;
+
+                    if (data[i].website.replace(/\s/g, "") == '') {
+                        cln.children[0].children[4].children[0].children[0].src = "/images/icons/website_inactive_icon.png";
+                        cln.children[0].children[4].children[0].href = "javascript: void(0)";
+                    }
+                    else {
+                        cln.children[0].children[4].children[0].children[0].src = "/images/icons/website_active_icon.png";
+                    }
+
+                    if (data[i].facebookUrl.replace(/\s/g, "") == '') {
+                        cln.children[0].children[4].children[1].children[0].src = "/images/icons/facebook_inactive_icon.png";
+                        cln.children[0].children[4].children[1].href = "javascript: void(0)";
+                    }
+                    else {
+                        cln.children[0].children[4].children[1].children[0].src = "/images/icons/facebook_active_icon.png";
+                    }
+
+                    if (data[i].youtubeUrl.replace(/\s/g, "") == '') {
+                        cln.children[0].children[4].children[2].children[0].src = "/images/icons/youtube_inactive_icon.png";
+                        cln.children[0].children[4].children[2].href = "javascript: void(0)";
+                    }
+                    else {
+                        cln.children[0].children[4].children[2].children[0].src = "/images/icons/youtube_active_icon.png";
+                    }
+
+                    if (data[i].twitterUrl.replace(/\s/g, "") == '') {
+                        cln.children[0].children[4].children[3].children[0].src = "/images/icons/twitter_inactive_icon.png";
+                        cln.children[0].children[4].children[3].href = "javascript: void(0)";
+                    }
+                    else {
+                        cln.children[0].children[4].children[3].children[0].src = "/images/icons/twitter_active_icon.png";
+                    }
+
+                    if (data[i].linkedInUrl.replace(/\s/g, "") == '') {
+                        cln.children[0].children[4].children[4].children[0].src = "/images/icons/linkedin_inactive_icon.png";
+                        cln.children[0].children[4].children[4].href = "javascript: void(0)";
+                    }
+                    else {
+                        cln.children[0].children[4].children[4].children[0].src = "/images/icons/linkedin_active_icon.png";
+                    }
+                }
+                document.getElementById('search-card').classList.remove('whirl');
+            });
+        }
+
+        function searchCatalogues() {
+            document.getElementById('search-card').classList.add('whirl');
+
+            var cataloguetype = document.getElementById('cataloguetype').value;
+
+            if (cataloguetype == "-") {
+                cataloguetype = "0";
+            }
+            var urlString = "?catalogueTypeId=" + cataloguetype;
+
+            getCatalogueList(urlString);
+        }
+
+        function getCatalogueList(urlString) {
+            $.get("GetCatalogues/" + urlString, function (data) {
+                removeAllChildNodes(document.getElementById("catalogue-container"));
+
+                for (let i = 0; i < data.length; i++) {
+                    var itm = document.getElementById("catalogue-item-template");
+                    var cln = itm.cloneNode(true);
+                    cln.style.display = "block";
+                    document.getElementById("catalogue-container").appendChild(cln);
+
+                    cln.children[0].children[0].children[0].innerHTML = data[i].name;
+                    cln.children[0].children[1].children[0].innerHTML = data[i].author;
+                    cln.children[0].children[2].children[0].innerHTML = data[i].year;
+                    cln.children[0].children[3].children[0].innerHTML = data[i].theme;
+                    cln.children[0].children[4].children[0].innerHTML = data[i].targetPopulation;
+                    cln.children[0].children[5].children[0].innerHTML = data[i].country;
+
+                    if (data[i].link.replace(/\s/g, "") != '') cln.children[0].children[6].children[0].href = data[i].link;
+
+                    if (data[i].link.replace(/\s/g, "") == '') {
+                        cln.children[0].children[6].children[0].children[0].src = "/images/icons/website_inactive_icon.png";
+                        cln.children[0].children[6].children[0].href = "javascript: void(0)";
+                    }
+                    else {
+                        cln.children[0].children[6].children[0].children[0].src = "/images/icons/website_active_icon.png";
+                    }
+                }
+                document.getElementById('search-card').classList.remove('whirl');
+            });
+        }
+
+
+        function autocompleteTab1(e) {
+            searchStakeholders();
+        }
+
+        function SortTitle() {
+
+            var inputField = document.getElementById('searchTab1Field').value;
+            var country = document.getElementById('country').value;
+            var stakeholdertype = document.getElementById('stakeholdertype').value;
+            var orderbytitle = document.getElementById('title-radio').checked;
+            var orderid = orderbytitle == true ? 0 : 1;
+
+            if (country == "-") {
+                country = "0";
+            }
+            if (stakeholdertype == "-") {
+                stakeholdertype = "0";
+            }
+            var urlString = "?countryId=" + country + "&stakeholderTypeId=" + stakeholdertype + "&orderId=" + orderid + "&inputField=" + inputField;
+
+            getStackHolderList(urlString);
+        }
+
+        function SortCountry() {
+
+            var inputField = document.getElementById('searchTab1Field').value;
+            var country = document.getElementById('country').value;
+            var stakeholdertype = document.getElementById('stakeholdertype').value;
+            var orderbytitle = document.getElementById('title-radio').checked;
+            var orderid = orderbytitle == true ? 0 : 1;
+
+            if (country == "-") {
+                country = "0";
+            }
+            if (stakeholdertype == "-") {
+                stakeholdertype = "0";
+            }
+            var urlString = "?countryId=" + country + "&stakeholderTypeId=" + stakeholdertype + "&orderId=" + orderid + "&inputField=" + inputField;
+
+            getStackHolderList(urlString);
+        }
+
+        $("#country").change(function () {
+            searchStakeholders();
+        });
+
+        $("#stakeholdertype").change(function () {
+            searchStakeholders();
+        });
+
+        $("#cataloguetype").change(function () {
+            searchCatalogues();
+        });
+
+        $("#category").change(function () {
+            var category = document.getElementById('category').value;
+
+            document.getElementById('subcategory-div').hidden = true;
+
+            if (category == "0") {
+                document.getElementById("subcategory").selectedIndex = "0";
+                document.getElementById('subcategory-div').hidden = true;
+            }
+            else {
+                $.get("GetSubCategories/?categoryId=" + category, function (data) {
+                    var subcategory = document.getElementById('subcategory');
+                    subcategory.innerHTML = "";
+                    for (var i = 0; i < data.length; i++) {
+                        //console.log(data[i]);
+                        $("#subcategory").append("<option value=\"" + data[i].value + "\">" + data[i].text + "</option>");
+                    }
+                    if (data.length > 1) {
+                        document.getElementById('subcategory-div').hidden = false;
+                    }
+                    else {
+                        document.getElementById('subcategory-div').hidden = true;
+                    }
+                });
+            }
+        });
+
+        $("#subcategory").change(function () {
+            document.getElementById('search-card').classList.add('whirl');
+            var subcategoryId = document.getElementById('subcategory').value;
+            if (subcategoryId == "-") {
+                removeAllChildNodes(document.getElementById("tools-container-top5"));
+                removeAllChildNodes(document.getElementById("tools-container-all"));
+                return;
+            }
+
+            var urlString = "?subcategoryId=" + subcategoryId + "&remoteIp=" + remoteIp;
+
+            $.get("GetTools/" + urlString, function (data) {
+
+                removeAllChildNodes(document.getElementById("tools-container-top5"));
+                removeAllChildNodes(document.getElementById("tools-container-all"));
+
+                document.getElementById("tools-count").innerHTML = data.length + " registries";
+
+                if (data.length > 5)
+                    data_top5 = data.slice(0, 5);
+                else
+                    data_top5 = data;
+
+                for (let i = 0; i < data_top5.length; i++) {
+                    var itm = document.getElementById("tool-item-template-large");
+                    var cln = itm.cloneNode(true);
+                    cln.style.display = "block";
+                    document.getElementById("tools-container-top5").appendChild(cln);
+
+                    cln.children[0].children[0].children[0].href = data_top5[i].link;
+                    cln.children[0].children[1].children[0].children[0].href = data_top5[i].link;
+                    cln.children[0].children[0].children[0].children[0].src = data_top5[i].imageUrl;
+                    cln.children[0].children[1].children[0].children[0].children[0].innerHTML = data_top5[i].name;
+                    cln.children[0].children[1].children[0].children[1].innerHTML = data_top5[i].ratingDTO.averageScore.toFixed(2) + " / 5 (" + data_top5[i].ratingDTO.votes + " votes)";
+
+                    if (data_top5[i].description.length >= 150 && @Model.AccessibilityMenuIPDTO.Fonts == 0) {
+                            cln.children[0].children[1].children[0].children[2].innerHTML = data_top5[i].description.substring(0, 150) + "...";
+                    }
+                    else if (data_top5[i].description.length >= 40 && @Model.AccessibilityMenuIPDTO.Fonts == 1) {
+                            cln.children[0].children[1].children[0].children[2].innerHTML = data_top5[i].description.substring(0, 40) + "...";
+                    }
+                    else {
+                        cln.children[0].children[1].children[0].children[2].innerHTML = data_top5[i].description;
+                    }
+                    cln.children[0].children[1].children[0].children[3].href = "ToolkitInfo/?toolId=" + data_top5[i].toolId;
+
+                    if (data_top5[i].hasRating) {
+                        cln.children[0].children[1].children[0].children[4].disabled = true;
+                        cln.children[0].children[1].children[0].children[4].style.visibility = "hidden";
+                    }
+                    else {
+                        cln.children[0].children[1].children[0].children[4].setAttribute('data-id', data_top5[i].toolId);
+                        cln.children[0].children[1].children[0].children[4].style.visibility = "visible";
+                    }
+
+                    //"ToolkitInfo/?toolId=" + data_top5[i].toolId;
+                }
+                if (data.length > 5) {
+                    for (let i = 5; i < data.length; i++) {
+                        var itm1 = document.getElementById("tool-item-template");
+                        var cln = itm1.cloneNode(true);
+                        cln.style.display = "block";
+                        document.getElementById("tools-container-all").appendChild(cln);
+
+                        cln.children[0].children[0].children[0].src = data[i].imageUrl;
+                        cln.children[0].children[1].children[0].innerHTML = data[i].name;
+                        cln.children[0].children[1].children[1].innerHTML = data[i].ratingDTO.averageScore.toFixed(2) + " / 5 (" + data[i].ratingDTO.votes + " votes)";
+                        cln.children[0].children[1].children[0].href = data[i].link;
+                        cln.children[0].children[2].children[0].innerHTML = data[i].description;
+                        cln.children[0].children[3].children[0].href = "ToolkitInfo/?toolId=" + data[i].toolId;
+
+                        if (data[i].hasRating) {
+                            cln.children[0].children[3].children[1].disabled = true;
+                            cln.children[0].children[3].children[1].style.visibility = "hidden";
+                        }
+                        else {
+                            cln.children[0].children[3].children[1].setAttribute('data-id', data[i].toolId);
+                            cln.children[0].children[3].children[1].style.visibility = "visible";
+
+                        }
+                    }
+                }
+                document.getElementById('search-card').classList.remove('whirl');
+            });
+        });
+
+        function displayTools() {
+            document.getElementById('dis').style.display = "block";
+        }
+
+        function checkUserAgent()
+        {
+            /* Storing user's device details in a variable*/
+            let details = navigator.userAgent;
+
+            /* Creating a regular expression
+            containing some mobile devices keywords
+            to search it in details string*/
+            let regexp = /android|iphone|kindle|ipad/i;
+
+            /* Using test() method to search regexp in details
+            it returns boolean value*/
+            let isMobileDevice = regexp.test(details);
+
+            //if (isMobileDevice) {
+            //    document.write("You are using a Mobile Device");
+            //} else {
+            //    document.write("You are using Desktop");
+            //}
+        }
+
+        function removeAllChildNodes(parent) {
+            while (parent.firstChild) {
+                parent.removeChild(parent.firstChild);
+            }
+        }
+
+        $(document).on("click", ".open-AddRateDialog", function () {
+            var registerId = $(this).data('id');
+            document.getElementById("submit-id").innerHTML = registerId;
+
+            if (this.parentElement.parentElement.parentElement.parentElement.id == "tool-item-template-large") {
+                document.getElementById('myModalLabel').innerHTML = "Rate - " + this.parentElement.parentElement.children[0].children[0].children[0].innerHTML;
+            }
+            else {
+                document.getElementById('myModalLabel').innerHTML = "Rate - " + this.parentElement.parentElement.children[1].children[0].innerText;
+            }
+
+            var radioValue = document.querySelector('input[name="i-radio"]:checked');
+            var radio1Value = document.querySelector('input[name="i-radio1"]:checked');
+            var radio2Value = document.querySelector('input[name="i-radio2"]:checked');
+            if (radioValue == null || radio1Value == null || radio2Value == null) {
+                document.getElementById('submit-btn').style.display = "none";
+            }
+        });
+
+        function CheckRadioBtn() {
+            var radioValue = document.querySelector('input[name="i-radio"]:checked');
+            var radio1Value = document.querySelector('input[name="i-radio1"]:checked');
+            var radio2Value = document.querySelector('input[name="i-radio2"]:checked');
+            if (radioValue == null || radio1Value == null || radio2Value == null) {
+                document.getElementById('submit-btn').style.display = "none";
+            }
+            else {
+                document.getElementById('submit-btn').style.display = "block";
+            }
+        }
+
+        async function RateTool() {
+            //let remoteIp = await getIpAddress();
+
+            var radioValue = document.querySelector('input[name="i-radio"]:checked').value;
+            var radio1Value = document.querySelector('input[name="i-radio1"]:checked').value;
+            var radio2Value = document.querySelector('input[name="i-radio2"]:checked').value;
+            var toolValue = document.getElementById('submit-id').innerHTML;
+
+            var formData = new FormData();
+            formData.append('radioValue', radioValue);
+            formData.append('radio1Value', radio1Value);
+            formData.append('radio2Value', radio2Value);
+            formData.append('toolValue', toolValue);
+            formData.append('remoteIp', remoteIp);
+
+            $.ajax({
+                type: "post",
+                url: "/Toolkit/RateTool",
+                contentType: false,
+                processData: false,
+                data: formData,
+                success: function (message) {
+                    var url = "/Toolkit/ToolkitInfo/?toolId=" + toolValue;
+                    //Navigate to the new URL
+                    window.location.href = url;
+                },
+                error: function () {
+                    alert("there was error uploading files!");
+                }
+            });
+        }
+
+        async function getIpAddress() {
+            let apiKey = 'ayofRJDngzlRJHCxzmrt';
+            const data = await $.getJSON('https://ipgeolocation.abstractapi.com/v1/?api_key=' + apiKey, function (data) {
+                //window.alert(data.ip_address);
+                remoteIp = data.ip_address;
+            });
+            return data.ip_address;
+        }
+
+    </script>
+
+}

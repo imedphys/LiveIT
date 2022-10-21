@@ -1,0 +1,61 @@
+﻿@model IEnumerable<LiveIT.Toolkit.Models.CatalogueDTO>
+@using System.Security.Claims;
+
+@{
+    ViewBag.Title = "Catalogues";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="content-heading">
+    <div>
+        ADMIN - Catalogues
+        <a style="font-size:12px" class="buttonRound" href="/Auth/LogOut">(Logout)</a>
+    </div>
+</div>
+
+@if (ViewBag.actionMessage != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <button class="close" type="button" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        @ViewBag.actionMessage
+    </div>
+}
+
+<div class="row">
+    <div class="card col-xl-11" style="margin: 0 10px 10px">
+        <div class="card-header">
+            <div class="card-title">Catalogues</div>
+            <a asp-action="AddCatalogue" class="mb-1 btn btn-primary" style="float:right;text-align:right" type="button">Add new catalogue</a>
+        </div>
+        <div class="card-body">
+            <table class="table table-striped my-5 w-100" id="example2">
+                <thead>
+                    <tr>
+                        <th data-priority="1">Α/Α</th>
+                        <th style="text-align: center" class="sort-numeric">Title</th>
+                        <th style="text-align: center" class="sort-numeric">Country</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr class="gradeX">
+                            <td style="text-align: center">
+                                <a asp-action="EditCatalogue" asp-route-passToken="@item.PassToken">T @item.CatalogueId</a>
+                            </td>
+                            <td style="text-align: center">@item.Name</td>
+                            <td style="text-align: center">@item.Country</td>
+                            <td style="text-align: center">
+                                <a asp-action="DeleteCatalogue" asp-route-passToken="@item.PassToken" data-toggle="tooltip" data-placement="top" style="margin: 0 10px 0 0">
+                                    <em class="mr-2 fas fa-minus-circle"></em>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

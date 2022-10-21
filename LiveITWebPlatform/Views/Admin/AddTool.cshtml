@@ -1,0 +1,146 @@
+﻿@model LiveIT.Toolkit.Models.ToolDTO
+
+@{
+    ViewData["Title"] = "Add Tool";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content-heading">
+    <div>
+        Add Tool
+    </div>
+</div>
+
+<div class="card" style="max-width:1300px">
+    <div class="card-body">
+        <div class="col-md-4">
+            <form asp-action="AddTool">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Name" class="control-label"></label> <small><i> (max: 150 char.)</i></small>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Description" class="control-label"></label> <small><i> (max: 2500 char.)</i></small>
+                    <input asp-for="Description" class="form-control" />
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="DescriptionEL" class="control-label"></label> <small><i> (max: 2500 char.)</i></small>
+                    <input asp-for="DescriptionEL" class="form-control" />
+                    <span asp-validation-for="DescriptionEL" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="DescriptionPT" class="control-label"></label> <small><i> (max: 2500 char.)</i></small>
+                    <input asp-for="DescriptionPT" class="form-control" />
+                    <span asp-validation-for="DescriptionPT" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Link" class="control-label"></label> <small><i> (max: 1000 char.)</i></small>
+                    <input asp-for="Link" class="form-control" />
+                    <span asp-validation-for="Link" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ImageUrl" class="control-label"></label> <small><i> (max: 250 char.)</i></small>
+                    <input asp-for="ImageUrl" class="form-control" />
+                    <span asp-validation-for="ImageUrl" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="VideoUrl" class="control-label"></label> <small><i> (max: 250 char.)</i></small>
+                    <input asp-for="VideoUrl" class="form-control" />
+                    <span asp-validation-for="VideoUrl" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PublicationYear" class="control-label"></label>
+                    <input asp-for="PublicationYear" class="form-control" />
+                    <span asp-validation-for="PublicationYear" class="text-danger"></span>
+                </div>
+                <br />
+                <div class="form-group" id="tool-btn">
+                    <input type="submit" value="Add" class="mb-1 btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Tools">Return to Tool list</a>
+</div>
+
+@section Scripts {
+    <script src="~/js/popper.min.js"></script>
+    <script src="~/js/moment.js"></script>
+
+    <link rel="stylesheet" href="~/css/bootstrap-datetimepicker.min.css">
+    <script src="~/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script>
+        $(function () {
+
+        });
+        $("#Type").change(function () {
+            var typeValue = document.getElementById('Type').value;
+
+            if (typeValue == "-")
+            {
+                document.getElementById('subtype-drop').style.display = "none";
+                document.getElementById('tool-btn').style.display = "none";
+                return;
+            }
+
+            var formData = new FormData();
+            formData.append('typeValue', typeValue);
+
+            $.ajax({
+                type: "post",
+                url: "/Admin/GetSubTypes",
+                contentType: false,
+                processData: false,
+                data: formData,
+                success: function (message) {
+
+                    var select = document.getElementById("SubType");
+                    while (select.firstChild) {
+                        select.removeChild(select.firstChild);
+                    }
+                    for (const element of message) {
+                        var option = document.createElement('option');
+                        option.text = element.name;
+                        option.value = element.subTypeId;
+                        select.add(option, 0);
+                    }
+                    var option = document.createElement('option');
+                    option.text = "-";
+                    option.value = "-";
+                    select.add(option, 0);
+                },
+                error: function () {
+                    alert("there was error uploading files!");
+                }
+            });
+            document.getElementById('subtype-drop').style.display = "block";
+        });
+        $("#SubType").change(function () {
+            var subTypeValue = document.getElementById('SubType').value;
+
+            if (subTypeValue != "-") {
+                document.getElementById('tool-btn').style.display = "block";
+            }
+            else {
+                document.getElementById('tool-btn').style.display = "none";
+            }
+        });
+            //document.getElementById('companyCheckBox').onchange = function () {
+            //    document.getElementById('companyText').disabled = !this.checked;
+            //    document.getElementById('Company').disabled = this.checked;
+            //    document.getElementById('Company').selectedIndex = 0;
+            //    document.getElementById('companyText').value = '';
+            //};
+
+    </script>
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+}

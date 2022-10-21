@@ -1,0 +1,221 @@
+﻿@model LiveIT.Toolkit.Models.ToolDTO
+@{
+    ViewBag.Title = "Info";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content-heading">
+    <div class="accessibility-medium">
+        <img src="@Model.ImageUrl" width="30" height="30" alt="@Model.Name icon" />
+        @Model.Name
+    </div>
+</div>
+
+<div class="card card-default" style="max-width:1300px">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-lg-6">
+                <p id="test123" class="lead bb accessibility-medium tabable">@Model.Name</p>
+                <form class="form-horizontal">
+                    <div class="form-group row">
+                        <div class="col-md-4 accessibility-medium tabable">@Model.TranslationDTOs[24].Text:</div>
+                        <div class="col-md-8">
+                            <strong class="accessibility-medium tabable">@Model.Description</strong>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-4 accessibility-medium">Site:</div>
+                        <div class="col-md-8 accessibility-medium accessibility-underline accessibility-colored">
+                            <a id="test456" href="@Model.Link"><strong>@Model.Link</strong></a>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-4 accessibility-medium">Video:</div>
+                        @if (Model.VideoUrl != "?feature=oembed")
+                        {
+                            <div class="col-md-8 accessibility-colored">
+                                <iframe class="youtube-video" width="600" height="350"
+                                        src="@Model.VideoUrl">
+                                </iframe>
+                            </div>
+                        }
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-4 accessibility-medium">@Model.TranslationDTOs[25].Text:</div>
+                        <div class="col-md-8 accessibility-medium">
+                            <strong>@Model.PublicationYear</strong>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-4 accessibility-medium tabable">Rating - @Model.TranslationDTOs[20].Text:</div>
+                        <div class="col-md-8 accessibility-medium">
+                            @if (Model.RatingDTO.Usefulness >= 0.5f)
+                            {<span class="fa fa-star starschecked"></span>}
+                            else
+                            { <span class="fa fa-star"></span>}
+                            @if (Model.RatingDTO.Usefulness >= 1.5f)
+                            {<span class="fa fa-star starschecked"></span>}
+                            else
+                            { <span class="fa fa-star"></span>}
+                            @if (Model.RatingDTO.Usefulness >= 2.5f)
+                            {<span class="fa fa-star starschecked"></span>}
+                            else
+                            { <span class="fa fa-star"></span>}
+                            @if (Model.RatingDTO.Usefulness >= 3.5f)
+                            {<span class="fa fa-star starschecked"></span>}
+                            else
+                            { <span class="fa fa-star"></span>}
+                            @if (Model.RatingDTO.Usefulness >= 4.5f)
+                            {<span class="fa fa-star starschecked"></span>}
+                            else
+                            { <span class="fa fa-star"></span>}
+                            <span style="margin:0 5px"><strong>@string.Format("{0:N2}", Model.RatingDTO.Usefulness) / 5</strong>(@Model.RatingDTO.Votes votes)</span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-4 accessibility-medium">Rating - @Model.TranslationDTOs[21].Text:</div>
+                        <div class="col-md-8 accessibility-medium">
+                            @if (Model.RatingDTO.Innovation >= 0.5f)
+                            {<span class="fa fa-star starschecked"></span>}
+                            else
+                            { <span class="fa fa-star"></span>}
+                            @if (Model.RatingDTO.Innovation >= 1.5f)
+                            {<span class="fa fa-star starschecked"></span>}
+                            else
+                            { <span class="fa fa-star"></span>}
+                            @if (Model.RatingDTO.Innovation >= 2.5f)
+                            {<span class="fa fa-star starschecked"></span>}
+                            else
+                            { <span class="fa fa-star"></span>}
+                            @if (Model.RatingDTO.Innovation >= 3.5f)
+                            {<span class="fa fa-star starschecked"></span>}
+                            else
+                            { <span class="fa fa-star"></span>}
+                            @if (Model.RatingDTO.Innovation >= 4.5f)
+                            {<span class="fa fa-star starschecked"></span>}
+                            else
+                            { <span class="fa fa-star"></span>}
+                            <span style="margin:0 5px"><strong>@string.Format("{0:N2}", Model.RatingDTO.Innovation) / 5</strong>(@Model.RatingDTO.Votes votes)</span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-4 accessibility-medium">Rating - @Model.TranslationDTOs[22].Text:</div>
+                        <div class="col-md-8 accessibility-medium">
+                            @if (Model.RatingDTO.Safety >= 0.5f)
+                            {<span class="fa fa-star starschecked"></span>}
+                            else
+                            { <span class="fa fa-star"></span>}
+                            @if (Model.RatingDTO.Safety >= 1.5f)
+                            {<span class="fa fa-star starschecked"></span>}
+                            else
+                            { <span class="fa fa-star"></span>}
+                            @if (Model.RatingDTO.Safety >= 2.5f)
+                            {<span class="fa fa-star starschecked"></span>}
+                            else
+                            { <span class="fa fa-star"></span>}
+                            @if (Model.RatingDTO.Safety >= 3.5f)
+                            {<span class="fa fa-star starschecked"></span>}
+                            else
+                            { <span class="fa fa-star"></span>}
+                            @if (Model.RatingDTO.Safety >= 4.5f)
+                            {<span class="fa fa-star starschecked"></span>}
+                            else
+                            { <span class="fa fa-star"></span>}
+                            <span style="margin:0 5px"><strong>@string.Format("{0:N2}", Model.RatingDTO.Safety) / 5</strong> (@Model.RatingDTO.Votes votes)</span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-4 accessibility-medium">@Model.TranslationDTOs[26].Text:</div>
+                        <div class="col-md-8 accessibility-medium">
+                            <strong>@Model.RegistrationDateTime.ToString("dd/MM/yyyy")</strong>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+
+
+<div>
+    <a asp-action="SearchToolkit" style="padding: 5px; border: 1px solid red;border-color:darkred" class="accessibility-medium accessibility-underline accessibility-colored">@Model.TranslationDTOs[27].Text</a>
+</div>
+<br />
+@section Styles{
+    <style>
+        .starschecked {
+            color: orange;
+        }
+    </style>
+}
+
+@*<div>
+        <a asp-action="PackagingLineFormList">Επιστροφή στη λίστα των εντύπων</a>
+    </div>*@
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="~/js/popper.min.js"></script>
+    <script src="~/js/moment.js"></script>
+    <script src="https://cdn.jsdelivr.net/timepicker.js/latest/timepicker.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/timepicker.js/latest/timepicker.min.css" rel="stylesheet" />
+
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        $(document).ready(function () {
+            var lastTabIndex = 10;
+            function OnFocusOut() {
+                var currentElement = $get(currentElementId); // ID set by OnFOcusIn
+                var curIndex = currentElement.tabIndex; //get current elements tab index
+                if (curIndex == lastTabIndex) { //if we are on the last tabindex, go back to the beginning
+                    curIndex = 0;
+                }
+                var tabbables = document.querySelectorAll(".tabable"); //get all tabable elements
+                for (var i = 0; i < tabbables.length; i++) { //loop through each element
+                    if (tabbables[i].tabIndex == (curIndex + 1)) { //check the tabindex to see if it's the element we want
+                        tabbables[i].focus(); //if it's the one we want, focus it and exit the loop
+                        break;
+                    }
+                }
+            }
+
+            if (@Model.AccessibilityMenuIPDTO.Fonts == 1) {
+                setFontSize();
+            }
+
+            if (@Model.AccessibilityMenuIPDTO.Underline == 1){
+                setUnderlineLinks();
+            }
+
+            if (@Model.AccessibilityMenuIPDTO.Colored == 1) {
+                setColoredLinks();
+            }
+     });
+
+    //Accesibility Menu
+    function setFontSize() {
+        var accessibilityL = document.getElementsByClassName('accessibility-large');
+        var accessibilityM = document.getElementsByClassName('accessibility-medium');
+        for (let i = 0; i < accessibilityL.length; i++) {
+            accessibilityL[i].style.fontSize = "150%";
+        }
+        for (let i = 0; i < accessibilityM.length; i++) {
+            accessibilityM[i].style.fontSize = "135%";
+        }
+    }
+    function setUnderlineLinks() {
+        var accessibilityUnderline = document.getElementsByClassName('accessibility-underline');
+        for (let i = 0; i < accessibilityUnderline.length; i++) {
+            accessibilityUnderline[i].style.textDecoration = "underline";
+        }
+    }
+    function setColoredLinks() {
+        var accessibilityColored = document.getElementsByClassName('accessibility-colored');
+        for (let i = 0; i < accessibilityColored.length; i++) {
+            accessibilityColored[i].style.backgroundColor = "yellow";
+        }
+    }
+    </script>
+
+}

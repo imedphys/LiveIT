@@ -1,0 +1,91 @@
+﻿@model IEnumerable<LiveIT.Toolkit.Models.ToolDTO>
+@using System.Security.Claims;
+
+@{
+    ViewBag.Title = "Tools";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="content-heading">
+    <div>
+        ADMIN - Tools
+        <a style="font-size:12px" class="buttonRound" href="/Auth/LogOut">(Logout)</a>
+    </div>
+</div>
+
+@if (ViewBag.actionMessage != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <button class="close" type="button" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        @ViewBag.actionMessage
+    </div>
+}
+
+<div class="card card col-xl-11">
+    <div class="card-header">
+        <div class="card-title">Advisor Tools</div>
+        <a asp-action="AddTool" class="mb-1 btn btn-primary" style="float:right;text-align:right" type="button">Add new tool</a>
+    </div>
+    <div class="card-body">
+        <table class="table table-striped my-5 w-100" id="example3">
+            <thead>
+                <tr>
+                    <th data-priority="1"></th>
+                    <th data-priority="1">Α/Α</th>
+                    <th style="text-align: center" class="sort-numeric">Title</th>
+                    <th style="text-align: center" class="sort-numeric">Description</th>
+                    <th style="text-align: center" class="sort-numeric">Link</th>
+                    <th style="text-align: center" class="sort-numeric">Image Url</th>
+                    <th style="text-align: center" class="sort-numeric">Video Url</th>
+                    <th style="text-align: center" class="sort-numeric">Publication Year</th>
+                    <th style="text-align: center" class="sort-numeric">Registered</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                <tr class="gradeX">
+                    <td>
+                        <img src="@item.ImageUrl" width="30" height="30" />
+                    </td>
+                    <td style="text-align: center">
+                        <a asp-action="EditTool" asp-route-passToken="@item.PassToken">T @item.ToolId</a>
+                    </td>
+                    <td style="text-align: center">@item.Name</td>
+                    <td style="text-align: center">@item.Description</td>
+                    <td style="text-align: center">
+                        <a href="@item.Link" target="_blank">
+                            <img src="https://cdn4.iconfinder.com/data/icons/web-links/512/41-512.png" width="30" height="30" />
+                        </a>
+                    </td>
+                    <td style="text-align: center">
+                        <a href="@item.ImageUrl" target="_blank">
+                            <img src="https://cdn4.iconfinder.com/data/icons/web-links/512/41-512.png" width="30" height="30" />
+                        </a>
+                    </td>
+                    <td style="text-align: center">
+                        <a href="@item.VideoUrl" target="_blank">
+                            <img src="https://cdn4.iconfinder.com/data/icons/web-links/512/41-512.png" width="30" height="30" />
+                        </a>
+                    </td>
+                    <td style="text-align: center">@item.PublicationYear</td>
+                    <td style="text-align: center">@item.RegistrationDateTime.ToString("dd/MM/yyyy hh:mm")</td>
+                    <td style="text-align: center">
+                        <a asp-action="RemoveRating" asp-route-passToken="@item.PassToken" data-toggle="tooltip" title="Delete rating" data-placement="top" style="margin: 0 10px 0 0">
+                            <em class="mr-2 fas fa-rainbow"></em>
+                        </a>
+                    </td>
+                    <td style="text-align: center">
+                        <a asp-action="DeleteTool" asp-route-passToken="@item.PassToken" data-toggle="tooltip" title="Delete tool" data-placement="top" style="margin: 0 10px 0 0">
+                            <em class="mr-2 fas fa-minus-circle"></em>
+                        </a>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

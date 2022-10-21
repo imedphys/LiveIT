@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "mssql2": {
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/liveit/databases/liveit",
+      "type": "mssql.azure",
+      "connectionId": "ConnectionStrings:live-it",
+      "secretStore": "AzureAppSettings"
+    }
+  }
+}

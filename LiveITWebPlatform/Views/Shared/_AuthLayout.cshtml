@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LiveIT | @ViewData["Title"] </title>
+    <link rel="stylesheet" href="~/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+
+    <environment names="Development">
+        <!-- =============== VENDOR STYLES ===============-->
+        @*<link href='~/vendor/@@fortawesome/fontawesome-free/css/brands.css' rel="stylesheet" />
+        <link href='~/vendor/@@fortawesome/fontawesome-free/css/regular.css' rel="stylesheet" />
+        <link href='~/vendor/@@fortawesome/fontawesome-free/css/solid.css' rel="stylesheet" />
+        <link href='~/vendor/@@fortawesome/fontawesome-free/css/fontawesome.css' rel="stylesheet" />
+        <link href="~/vendor/simple-line-icons/css/simple-line-icons.css" rel="stylesheet" />*@
+        <!-- =============== BOOTSTRAP STYLES ===============-->
+        <link href="~/css/bootstrap.css" rel="stylesheet" />
+        <!-- =============== APP STYLES ===============-->
+        <link href="~/css/app.css" rel="stylesheet" asp-append-version="true" />
+    </environment>
+    <environment names="Staging,Production">
+        <!-- =============== VENDOR STYLES ===============-->
+        @*<link href='~/vendor/@@fortawesome/fontawesome-free/css/brands.css' rel="stylesheet" />
+        <link href='~/vendor/@@fortawesome/fontawesome-free/css/regular.css' rel="stylesheet" />
+        <link href='~/vendor/@@fortawesome/fontawesome-free/css/solid.css' rel="stylesheet" />
+        <link href='~/vendor/@@fortawesome/fontawesome-free/css/fontawesome.css' rel="stylesheet" />
+        <link href="~/vendor/simple-line-icons/css/simple-line-icons.css" rel="stylesheet" />*@
+        <!-- =============== BOOTSTRAP STYLES ===============-->
+        <link href="~/css/bootstrap.css" rel="stylesheet" />
+        <!-- =============== APP STYLES ===============-->
+        <link href="~/css/app.css" rel="stylesheet" asp-append-version="true" />
+    </environment>
+</head>
+
+<body>
+    <div class="container" align="center">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
